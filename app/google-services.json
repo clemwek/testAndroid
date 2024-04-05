@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1038453060041",
+    "firebase_url": "https://demoapp-1cd22.firebaseio.com",
+    "project_id": "demoapp-1cd22",
+    "storage_bucket": "demoapp-1cd22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038453060041:android:b4db4b10f4b0f5af",
+        "android_client_info": {
+          "package_name": "com.vibes.androidpushdemoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038453060041-9lk3hn7fkup9hhgt1mmfku561h5c5h2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxBBABmRSOOhHfecPFrQMWJkkUaZjEbVc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

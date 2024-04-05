@@ -1,0 +1,108 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+repositories {
+    jcenter()
+//    maven { url 'http://maven.localytics.com/public' }
+}
+
+android {
+    flavorDimensions "default"
+    compileSdkVersion 31
+    buildToolsVersion '29.0.3'
+    testOptions.unitTests.includeAndroidResources true
+    defaultConfig {
+        applicationId "com.vibes.androidpushdemoapp"
+        minSdkVersion 26
+        targetSdkVersion 31
+        versionCode 1
+        versionName "0"
+        multiDexEnabled true
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+//        manifestPlaceholders = [logseneIndex: System.getenv('LOGSENE_INDEX') ? System.getenv('LOGSENE_INDEX'):
+//                logseneIndex]
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(System.getenv("PROJECT_ROOT") + "/resources/release-key.jks")
+            storePassword System.getenv("ANDROID_STORE_PASSWORD")
+            keyPassword System.getenv("ANDROID_KEY_PASSWORD")
+            keyAlias 'VibesKeyStoreAlias'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+configurations {
+    ktlint
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.multidex:multidex:2.0.0'
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    ktlint "com.github.shyiko:ktlint:0.15.0"
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.32'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+//    implementation project(':pushsdk:vibes')
+    // Uncomment the line below to use the SDK from the repository
+//    implementation 'com.vibes.vibes:vibes:4.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.mockito:mockito-core:2.21.0"
+
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.5.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
+    testImplementation 'org.jetbrains.kotlin:kotlin-stdlib:1.2.41'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit:1.2.30'
+    testImplementation "com.nhaarman:mockito-kotlin:1.1.0"
+    testImplementation 'org.amshove.kluent:kluent:1.14'
+    testImplementation 'org.robolectric:robolectric:3.8'
+
+    androidTestImplementation 'com.natpryce:hamkrest:1.4.2.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.0.0'
+    // Dependency injection
+    implementation 'com.google.dagger:dagger:2.14.1'
+    kapt 'com.google.dagger:dagger-compiler:2.28'
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+    compileOnly 'com.github.pengrad:jdk9-deps:1.0'
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.github.shyiko.ktlint.Main"
+    args "src/**/*.kt"
+    // args "--reporter=checkstyle, output=${buildDir}/ktlint.xml
+}
+
+apply plugin: 'com.google.gms.google-services'
